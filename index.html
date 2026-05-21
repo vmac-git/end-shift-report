@@ -1,347 +1,848 @@
-<h2 class="sr-only">End-of-Shift Report Form — vSOC Acceleronix</h2>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>End-of-Shift Report — Acceleronix vSOC</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
-  .form-wrap { padding: 1.5rem 0; font-size: 14px; color: var(--color-text-primary); }
-  .form-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--color-border-tertiary); }
-  .form-header h1 { font-size: 16px; font-weight: 500; margin: 0; }
-  .form-header .badge { font-size: 11px; padding: 3px 10px; border-radius: var(--border-radius-md); background: var(--color-background-warning); color: var(--color-text-warning); }
-  .section { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
-  .section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
-  .section-title i { font-size: 16px; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-  .field-row.full { grid-template-columns: 1fr; }
-  .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
-  .field { display: flex; flex-direction: column; gap: 4px; }
-  .field label { font-size: 12px; color: var(--color-text-secondary); font-weight: 500; }
-  .field input, .field select, .field textarea { font-size: 13px; }
-  .field textarea { min-height: 64px; resize: vertical; }
-  .rag-row { display: flex; gap: 8px; margin-top: 4px; }
-  .rag-btn { flex: 1; padding: 6px 0; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); font-size: 12px; font-weight: 500; cursor: pointer; text-align: center; transition: all 0.15s; }
-  .rag-btn.green { border-color: #0F6E56; background: #E1F5EE; color: #085041; }
-  .rag-btn.yellow { border-color: #BA7517; background: #FAEEDA; color: #633806; }
-  .rag-btn.red { border-color: #A32D2D; background: #FCEBEB; color: #501313; }
-  .ticket-row { display: grid; grid-template-columns: 80px 1fr 80px 100px 1fr; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 12px; }
-  .ticket-row.header { color: var(--color-text-secondary); font-weight: 500; border-bottom: 0.5px solid var(--color-border-tertiary); padding-bottom: 6px; margin-bottom: 10px; }
-  .add-row { font-size: 12px; color: var(--color-text-secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; margin-top: 4px; background: none; border: none; padding: 0; }
-  .add-row:hover { color: var(--color-text-primary); }
-  .pulse-row { display: grid; grid-template-columns: 1fr 80px; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 13px; }
-  .pulse-row.header { font-size: 12px; font-weight: 500; color: var(--color-text-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); padding-bottom: 6px; margin-bottom: 10px; }
-  .pass-fail { display: flex; gap: 6px; }
-  .pf-btn { font-size: 11px; padding: 3px 10px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-tertiary); background: var(--color-background-secondary); cursor: pointer; }
-  .pf-btn.pass { border-color: #0F6E56; background: #E1F5EE; color: #085041; }
-  .pf-btn.fail { border-color: #A32D2D; background: #FCEBEB; color: #501313; }
-  .submit-bar { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 0.5px solid var(--color-border-tertiary); }
-  .submit-bar .note { font-size: 12px; color: var(--color-text-secondary); }
-  .btn-submit { font-size: 13px; font-weight: 500; padding: 8px 20px; border-radius: var(--border-radius-md); background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); cursor: pointer; display: flex; align-items: center; gap: 6px; }
-  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 12px 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple-50: #EEEDFE;
+    --purple-100: #CECBF6;
+    --purple-200: #AFA9EC;
+    --purple-400: #7F77DD;
+    --purple-600: #534AB7;
+    --purple-800: #3C3489;
+    --purple-900: #26215C;
+    --gray-50: #F8F7FC;
+    --gray-100: #EFECF9;
+    --gray-200: #E0DBF2;
+    --gray-400: #9890C4;
+    --gray-600: #5F5A8A;
+    --gray-800: #2E2A52;
+    --gray-900: #1A1740;
+    --white: #FFFFFF;
+    --green-bg: #E1F5EE;
+    --green-border: #0F6E56;
+    --green-text: #085041;
+    --yellow-bg: #FAEEDA;
+    --yellow-border: #BA7517;
+    --yellow-text: #633806;
+    --red-bg: #FCEBEB;
+    --red-border: #A32D2D;
+    --red-text: #501313;
+    --border: rgba(83, 74, 183, 0.15);
+    --border-strong: rgba(83, 74, 183, 0.3);
+    --shadow-sm: 0 1px 3px rgba(38, 33, 92, 0.08);
+    --shadow-md: 0 4px 16px rgba(38, 33, 92, 0.1);
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--purple-900);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(38,33,92,0.3);
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    background: var(--purple-400);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-mark svg { width: 18px; height: 18px; fill: white; }
+  .logo-text {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.02em;
+  }
+  .logo-sub {
+    font-size: 11px;
+    color: var(--purple-200);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(127,119,221,0.25);
+    color: var(--purple-100);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  /* HERO BAND */
+  .hero-band {
+    background: linear-gradient(135deg, var(--purple-800) 0%, var(--purple-600) 100%);
+    padding: 2rem;
+    text-align: center;
+  }
+  .hero-band h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .hero-band p {
+    font-size: 13px;
+    color: var(--purple-100);
+  }
+  .hero-band .lema {
+    font-size: 12px;
+    color: var(--purple-200);
+    font-style: italic;
+    margin-top: 8px;
+    opacity: 0.85;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* SECTION CARD */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .card-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--purple-600);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-title svg { width: 15px; height: 15px; fill: none; stroke: var(--purple-600); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .grid-1 { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 12px; }
+  .col-span-2 { grid-column: span 2; }
+
+  /* FIELDS */
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--gray-900);
+    background: var(--gray-50);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    width: 100%;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--purple-400);
+    box-shadow: 0 0 0 3px rgba(127,119,221,0.15);
+    background: white;
+  }
+  .field textarea { min-height: 72px; resize: vertical; line-height: 1.5; }
+
+  /* RAG BUTTONS */
+  .rag-group { display: flex; gap: 6px; margin-top: 2px; }
+  .rag-btn {
+    flex: 1;
+    padding: 7px 4px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-strong);
+    background: var(--gray-50);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    color: var(--gray-600);
+    transition: all 0.15s;
+  }
+  .rag-btn:hover { border-color: var(--purple-400); color: var(--purple-600); }
+  .rag-btn.active-green { background: var(--green-bg); border-color: var(--green-border); color: var(--green-text); }
+  .rag-btn.active-yellow { background: var(--yellow-bg); border-color: var(--yellow-border); color: var(--yellow-text); }
+  .rag-btn.active-red { background: var(--red-bg); border-color: var(--red-border); color: var(--red-text); }
+
+  /* PULSE CHECK */
+  .pulse-table { width: 100%; }
+  .pulse-table .ph {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .pulse-row {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 8px;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .pulse-row:last-child { border-bottom: none; }
+  .pf-group { display: flex; gap: 5px; }
+  .pf-btn {
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border-strong);
+    background: var(--gray-50);
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--gray-600);
+    transition: all 0.15s;
+  }
+  .pf-btn:hover { border-color: var(--purple-400); }
+  .pf-btn.pass { background: var(--green-bg); border-color: var(--green-border); color: var(--green-text); }
+  .pf-btn.fail { background: var(--red-bg); border-color: var(--red-border); color: var(--red-text); }
+
+  /* TICKET TABLE */
+  .ticket-header {
+    display: grid;
+    grid-template-columns: 90px 1fr 70px 100px 1fr 30px;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .ticket-row {
+    display: grid;
+    grid-template-columns: 90px 1fr 70px 100px 1fr 30px;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .ticket-row input,
+  .ticket-row select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--gray-900);
+    background: var(--gray-50);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 6px 8px;
+    outline: none;
+    width: 100%;
+    transition: border-color 0.15s;
+  }
+  .ticket-row input:focus,
+  .ticket-row select:focus { border-color: var(--purple-400); background: white; }
+  .btn-remove {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-400);
+    transition: all 0.15s;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .btn-remove:hover { background: var(--red-bg); border-color: var(--red-border); color: var(--red-text); }
+  .btn-add-row {
+    font-size: 12px;
+    color: var(--purple-600);
+    background: none;
+    border: 1px dashed var(--purple-200);
+    border-radius: var(--radius-sm);
+    padding: 7px 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    width: 100%;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+  .btn-add-row:hover { background: var(--purple-50); border-color: var(--purple-400); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+  /* STAT CHIPS */
+  .stat-chips { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .stat-chip {
+    background: var(--gray-50);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    flex: 1;
+    min-width: 120px;
+  }
+  .stat-chip label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .stat-chip input {
+    font-family: 'DM Mono', monospace;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--purple-800);
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 0;
+  }
+
+  /* SUBMIT BAR */
+  .submit-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .submit-note {
+    font-size: 12px;
+    color: var(--gray-600);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .submit-note svg { width: 14px; height: 14px; stroke: var(--gray-400); fill: none; stroke-width: 1.8; }
+  .btn-submit {
+    background: var(--purple-600);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 10px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .btn-submit:hover { background: var(--purple-800); }
+  .btn-submit:active { transform: scale(0.98); }
+  .btn-submit svg { width: 15px; height: 15px; stroke: white; fill: none; stroke-width: 2; }
+
+  /* FOOTER */
+  footer {
+    background: var(--purple-900);
+    margin-top: 3rem;
+    padding: 1.5rem 2rem;
+    text-align: center;
+  }
+  .footer-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .footer-left { font-size: 12px; color: var(--purple-200); }
+  .footer-right { font-size: 11px; color: var(--purple-400); font-family: 'DM Mono', monospace; }
+
+  /* SUCCESS TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--green-bg);
+    border: 1px solid var(--green-border);
+    color: var(--green-text);
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  @media (max-width: 600px) {
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .hero-band h1 { font-size: 18px; }
+    main { padding: 1rem; }
+    .ticket-header, .ticket-row { grid-template-columns: 80px 1fr 60px 90px; }
+    .ticket-header span:nth-child(5),
+    .ticket-header span:nth-child(6),
+    .ticket-row input:nth-child(5),
+    .ticket-row select:nth-child(6) { display: none; }
+    .col-span-2 { grid-column: span 1; }
+  }
 </style>
+</head>
+<body>
 
-<div class="form-wrap">
-
-  <div class="form-header">
-    <div>
-      <h1><i class="ti ti-clipboard-text" aria-hidden="true" style="font-size:18px; vertical-align:-3px; margin-right:6px;"></i>End-of-Shift Report</h1>
-      <p style="font-size:12px; color:var(--color-text-secondary); margin:4px 0 0;">vSOC Acceleronix — Feishu Form</p>
-    </div>
-    <span class="badge">Draft template</span>
-  </div>
-
-  <!-- Section 1: Shift Info -->
-  <div class="section">
-    <div class="section-title"><i class="ti ti-user" aria-hidden="true"></i>Shift information</div>
-    <div class="field-row three">
-      <div class="field">
-        <label>Analyst name</label>
-        <input type="text" placeholder="Full name" />
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>
       </div>
-      <div class="field">
-        <label>Region</label>
-        <select>
-          <option>LATAM</option>
-          <option>EMEA</option>
-          <option>APAC</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Shift date (UTC)</label>
-        <input type="date" />
+      <div>
+        <div class="logo-text">Acceleronix</div>
+        <div class="logo-sub">vSOC Operations</div>
       </div>
     </div>
-    <div class="field-row three">
-      <div class="field">
-        <label>Shift start (UTC)</label>
-        <input type="time" />
-      </div>
-      <div class="field">
-        <label>Shift end (UTC)</label>
-        <input type="time" />
-      </div>
-      <div class="field">
-        <label>Incoming analyst</label>
-        <input type="text" placeholder="Name of next analyst" />
-      </div>
+    <div class="header-right">
+      <span class="header-badge">End-of-Shift Report</span>
     </div>
   </div>
+</header>
 
-  <!-- Section 2: Infrastructure Status -->
-  <div class="section">
-    <div class="section-title"><i class="ti ti-server" aria-hidden="true"></i>Infrastructure status</div>
-    <div class="field-row three">
-      <div class="field">
-        <label>Overall status</label>
-        <div class="rag-row">
-          <div class="rag-btn green" onclick="selectRag(this,'infra')">● Green</div>
-          <div class="rag-btn" onclick="selectRag(this,'infra')" style="color:var(--color-text-secondary)">● Yellow</div>
-          <div class="rag-btn" onclick="selectRag(this,'infra')" style="color:var(--color-text-secondary)">● Red</div>
-        </div>
-      </div>
-      <div class="field">
-        <label>VPN tunnels</label>
-        <select>
-          <option>All green</option>
-          <option>1+ degraded</option>
-          <option>1+ down</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>RADIUS nodes</label>
-        <select>
-          <option>All green</option>
-          <option>1+ degraded</option>
-          <option>1+ down</option>
-        </select>
-      </div>
-    </div>
-    <div class="field-row full">
-      <div class="field">
-        <label>Notes / anomalies</label>
-        <textarea placeholder="Describe any infrastructure issues, warnings, or items to watch..."></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 3: Pulse Check Log -->
-  <div class="section">
-    <div class="section-title"><i class="ti ti-heartbeat" aria-hidden="true"></i>Pulse check log</div>
-    <div class="pulse-row header">
-      <span>Check</span><span>Result</span>
-    </div>
-    <div class="pulse-row">
-      <span>Infrastructure health (Nightingale)</span>
-      <div class="pass-fail">
-        <button class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
-        <button class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
-      </div>
-    </div>
-    <div class="pulse-row">
-      <span>Authentication rate (Graylog)</span>
-      <div class="pass-fail">
-        <button class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
-        <button class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
-      </div>
-    </div>
-    <div class="pulse-row">
-      <span>Connectivity test (Management Platform)</span>
-      <div class="pass-fail">
-        <button class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
-        <button class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
-      </div>
-    </div>
-    <div class="pulse-row">
-      <span>eSIM / SGP.32 status</span>
-      <div class="pass-fail">
-        <button class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
-        <button class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
-      </div>
-    </div>
-    <div class="pulse-row">
-      <span>Log server capacity</span>
-      <div class="pass-fail">
-        <button class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
-        <button class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
-      </div>
-    </div>
-    <div class="divider"></div>
-    <div class="field-row three">
-      <div class="field">
-        <label>Pulse checks completed</label>
-        <select>
-          <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-        </select>
-      </div>
-      <div class="field" style="grid-column: span 2;">
-        <label>Log review outcome</label>
-        <select>
-          <option>Significant events — see ticket summary below</option>
-          <option>No significant events — review completed, nothing to flag</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 4: Ticket Summary -->
-  <div class="section">
-    <div class="section-title"><i class="ti ti-ticket" aria-hidden="true"></i>Ticket summary</div>
-    <div class="field-row three" style="margin-bottom:16px;">
-      <div class="field">
-        <label>Total tickets handled</label>
-        <input type="number" placeholder="0" min="0" />
-      </div>
-      <div class="field">
-        <label>Tickets resolved</label>
-        <input type="number" placeholder="0" min="0" />
-      </div>
-      <div class="field">
-        <label>Tickets still open</label>
-        <input type="number" placeholder="0" min="0" />
-      </div>
-    </div>
-    <div class="ticket-row header">
-      <span>Ticket ID</span><span>Customer</span><span>Priority</span><span>Status</span><span>Pending next step</span>
-    </div>
-    <div id="ticket-list">
-      <div class="ticket-row">
-        <input type="text" placeholder="#XXXXX" style="font-size:12px;" />
-        <input type="text" placeholder="Customer name" style="font-size:12px;" />
-        <select style="font-size:12px;">
-          <option>P1</option><option>P2</option><option>P3</option><option>P4</option>
-        </select>
-        <select style="font-size:12px;">
-          <option>Open</option><option>Pending</option><option>Resolved</option>
-        </select>
-        <input type="text" placeholder="Next action required" style="font-size:12px;" />
-      </div>
-    </div>
-    <button class="add-row" onclick="addTicketRow()"><i class="ti ti-plus" aria-hidden="true"></i> Add ticket</button>
-  </div>
-
-  <!-- Section 5: Customer Experience -->
-  <div class="section">
-    <div class="section-title"><i class="ti ti-users" aria-hidden="true"></i>Customer experience</div>
-    <div class="field-row full">
-      <div class="field">
-        <label>Hardware spotlight — aggressive / unapproved devices identified</label>
-        <input type="number" placeholder="0" min="0" />
-      </div>
-    </div>
-    <div class="field-row full">
-      <div class="field">
-        <label>CX check outcomes (if performed this shift)</label>
-        <textarea placeholder="e.g. SolRad — Green. CustomerX — Yellow: latency spike flagged, L2 notified..."></textarea>
-      </div>
-    </div>
-    <div class="field-row full">
-      <div class="field">
-        <label>SLA breaches this shift</label>
-        <select>
-          <option>None</option>
-          <option>1 breach — see notes</option>
-          <option>2+ breaches — see notes</option>
-        </select>
-      </div>
-    </div>
-    <div class="field-row full">
-      <div class="field">
-        <label>SLA breach notes (if applicable)</label>
-        <textarea placeholder="Ticket ID, reason for breach, justification..."></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 6: Pending Actions & Flags -->
-  <div class="section">
-    <div class="section-title"><i class="ti ti-flag" aria-hidden="true"></i>Pending actions &amp; flags</div>
-    <div class="field-row full">
-      <div class="field">
-        <label>Items requiring L2 intervention</label>
-        <textarea placeholder="Describe any items that require Technical Architect attention in the next shift..."></textarea>
-      </div>
-    </div>
-    <div class="field-row full">
-      <div class="field">
-        <label>Watch list (IMSIs / IMEIs / tunnels to monitor)</label>
-        <textarea placeholder="List specific identifiers the incoming analyst should watch proactively..."></textarea>
-      </div>
-    </div>
-    <div class="field-row full">
-      <div class="field">
-        <label>Improvement flags / threshold adjustment suggestions</label>
-        <textarea placeholder="Any recurring patterns, false positives, or process gaps observed this shift..."></textarea>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 7: Handover Confirmation -->
-  <div class="section">
-    <div class="section-title"><i class="ti ti-transfer" aria-hidden="true"></i>Handover confirmation</div>
-    <div class="field-row full">
-      <div class="field">
-        <label>Active P1 tickets at handover time?</label>
-        <select>
-          <option>No — clean handover</option>
-          <option>Yes — ownership explicitly transferred (see ticket summary)</option>
-        </select>
-      </div>
-    </div>
-    <div class="field-row full">
-      <div class="field">
-        <label>Handover log posted in Feishu/Lark?</label>
-        <select>
-          <option>Yes — incoming analyst tagged and acknowledged</option>
-          <option>Yes — incoming analyst tagged, awaiting acknowledgement</option>
-          <option>No — reason below</option>
-        </select>
-      </div>
-    </div>
-    <div class="field-row full">
-      <div class="field">
-        <label>Additional handover notes</label>
-        <textarea placeholder="Any final context the incoming analyst needs to know before taking ownership..."></textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="submit-bar">
-    <span class="note"><i class="ti ti-info-circle" aria-hidden="true" style="vertical-align:-2px; margin-right:4px;"></i>Submit at least 15 min before shift end</span>
-    <button class="btn-submit" onclick="submitForm()"><i class="ti ti-send" aria-hidden="true"></i> Submit report</button>
-  </div>
-
+<!-- HERO -->
+<div class="hero-band">
+  <h1>End-of-Shift Report</h1>
+  <p>Complete and submit at least 15 minutes before shift end · All times in UTC</p>
+  <p class="lema">"The last message is always ours. Not because it's required — because we care."</p>
 </div>
 
+<!-- MAIN FORM -->
+<main>
+  <form id="shiftForm" onsubmit="submitForm(event)">
+
+    <!-- 1. Shift Information -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Shift information
+      </div>
+      <div class="grid-3">
+        <div class="field">
+          <label>Analyst name</label>
+          <input type="text" placeholder="Full name" required />
+        </div>
+        <div class="field">
+          <label>Region</label>
+          <select required>
+            <option value="">Select region</option>
+            <option>LATAM</option>
+            <option>EMEA</option>
+            <option>APAC</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Shift date (UTC)</label>
+          <input type="date" required />
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="field">
+          <label>Shift start (UTC)</label>
+          <input type="time" required />
+        </div>
+        <div class="field">
+          <label>Shift end (UTC)</label>
+          <input type="time" required />
+        </div>
+        <div class="field">
+          <label>Incoming analyst</label>
+          <input type="text" placeholder="Name of next analyst" required />
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Infrastructure Status -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="4" rx="1"/><rect x="2" y="10" width="20" height="4" rx="1"/><rect x="2" y="17" width="20" height="4" rx="1"/></svg>
+        Infrastructure status
+      </div>
+      <div class="grid-3">
+        <div class="field">
+          <label>Overall status</label>
+          <div class="rag-group" id="rag-infra">
+            <button type="button" class="rag-btn active-green" onclick="selectRag('rag-infra','green',this)">● Green</button>
+            <button type="button" class="rag-btn" onclick="selectRag('rag-infra','yellow',this)">● Yellow</button>
+            <button type="button" class="rag-btn" onclick="selectRag('rag-infra','red',this)">● Red</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>VPN tunnels</label>
+          <select>
+            <option>All green</option>
+            <option>1+ degraded</option>
+            <option>1+ down</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>RADIUS nodes</label>
+          <select>
+            <option>All green</option>
+            <option>1+ degraded</option>
+            <option>1+ down</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>Notes / anomalies</label>
+          <textarea placeholder="Describe any infrastructure issues, warnings, or items to watch..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Pulse Check Log -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><polyline points="2 12 6 12 8 5 10 19 12 12 14 15 16 12 22 12"/></svg>
+        Pulse check log
+      </div>
+      <div class="pulse-table">
+        <div class="ph"><span>Check item</span><span>Result</span></div>
+        <div class="pulse-row">
+          <span>Infrastructure health (Nightingale)</span>
+          <div class="pf-group">
+            <button type="button" class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
+            <button type="button" class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
+          </div>
+        </div>
+        <div class="pulse-row">
+          <span>Authentication rate (Graylog)</span>
+          <div class="pf-group">
+            <button type="button" class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
+            <button type="button" class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
+          </div>
+        </div>
+        <div class="pulse-row">
+          <span>Connectivity test (Management Platform)</span>
+          <div class="pf-group">
+            <button type="button" class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
+            <button type="button" class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
+          </div>
+        </div>
+        <div class="pulse-row">
+          <span>eSIM / SGP.32 status</span>
+          <div class="pf-group">
+            <button type="button" class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
+            <button type="button" class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
+          </div>
+        </div>
+        <div class="pulse-row">
+          <span>Log server capacity (&lt; 80% disk usage)</span>
+          <div class="pf-group">
+            <button type="button" class="pf-btn pass" onclick="togglePF(this,'pass')">Pass</button>
+            <button type="button" class="pf-btn" onclick="togglePF(this,'fail')">Fail</button>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Pulse checks completed this shift</label>
+          <select>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Log review outcome</label>
+          <select>
+            <option>Significant events — see ticket summary below</option>
+            <option>No significant events — review completed, nothing to flag</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Ticket Summary -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+        Ticket summary
+      </div>
+      <div class="stat-chips">
+        <div class="stat-chip">
+          <label>Total handled</label>
+          <input type="number" placeholder="0" min="0" id="total-handled" oninput="updateOpen()" />
+        </div>
+        <div class="stat-chip">
+          <label>Resolved</label>
+          <input type="number" placeholder="0" min="0" id="total-resolved" oninput="updateOpen()" />
+        </div>
+        <div class="stat-chip">
+          <label>Still open</label>
+          <input type="number" placeholder="0" min="0" id="total-open" readonly style="color:var(--purple-600);" />
+        </div>
+      </div>
+      <div class="ticket-header">
+        <span>Ticket ID</span><span>Customer</span><span>Priority</span><span>Status</span><span>Pending next step</span><span></span>
+      </div>
+      <div id="ticket-list">
+        <div class="ticket-row">
+          <input type="text" placeholder="#XXXXX" />
+          <input type="text" placeholder="Customer" />
+          <select><option>P1</option><option>P2</option><option>P3</option><option>P4</option></select>
+          <select><option>Open</option><option>Pending</option><option>Resolved</option></select>
+          <input type="text" placeholder="Next action required" />
+          <button type="button" class="btn-remove" onclick="removeRow(this)" title="Remove">×</button>
+        </div>
+      </div>
+      <button type="button" class="btn-add-row" onclick="addTicketRow()">+ Add ticket</button>
+    </div>
+
+    <!-- 5. Customer Experience -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Customer experience
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Aggressive / unapproved devices identified</label>
+          <input type="number" placeholder="0" min="0" />
+        </div>
+        <div class="field">
+          <label>SLA breaches this shift</label>
+          <select>
+            <option>None</option>
+            <option>1 breach — see notes below</option>
+            <option>2+ breaches — see notes below</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>CX check outcomes (if performed this shift)</label>
+          <textarea placeholder="e.g. SolRad — Green. CustomerX — Yellow: latency spike flagged, L2 notified..."></textarea>
+        </div>
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>SLA breach notes (if applicable)</label>
+          <textarea placeholder="Ticket ID, reason for breach, justification..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Pending Actions & Flags -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        Pending actions &amp; flags
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>Items requiring L2 intervention</label>
+          <textarea placeholder="Describe any items that require Technical Architect attention in the next shift..."></textarea>
+        </div>
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>Watch list — IMSIs / IMEIs / tunnels to monitor</label>
+          <textarea placeholder="List specific identifiers the incoming analyst should watch proactively..."></textarea>
+        </div>
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>Improvement flags / threshold adjustment suggestions</label>
+          <textarea placeholder="Any recurring patterns, false positives, or process gaps observed this shift..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. Handover Confirmation -->
+    <div class="card">
+      <div class="card-title">
+        <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        Handover confirmation
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Active P1 tickets at handover time?</label>
+          <select>
+            <option>No — clean handover</option>
+            <option>Yes — ownership explicitly transferred (see ticket summary)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Handover log posted in Feishu/Lark?</label>
+          <select>
+            <option>Yes — incoming analyst tagged and acknowledged</option>
+            <option>Yes — incoming analyst tagged, awaiting acknowledgement</option>
+            <option>No — reason in notes below</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-1">
+        <div class="field">
+          <label>Additional handover notes</label>
+          <textarea placeholder="Any final context the incoming analyst needs to know before taking ownership..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT BAR -->
+    <div class="submit-bar">
+      <div class="submit-note">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Submit at least 15 minutes before shift end
+      </div>
+      <button type="submit" class="btn-submit">
+        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Submit report
+      </button>
+    </div>
+
+  </form>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">© 2026 Acceleronix · vSOC Operations · Internal use only</div>
+    <div class="footer-right">v1.0 · End-of-Shift Report Form</div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Report submitted successfully</div>
+
 <script>
-function selectRag(btn, group) {
-  const parent = btn.closest('.rag-row');
-  parent.querySelectorAll('.rag-btn').forEach(b => {
-    b.classList.remove('green','yellow','red');
-    b.style.color = 'var(--color-text-secondary)';
-  });
-  const txt = btn.textContent.trim();
-  if (txt.includes('Green')) { btn.classList.add('green'); btn.style.color=''; }
-  else if (txt.includes('Yellow')) { btn.classList.add('yellow'); btn.style.color=''; }
-  else { btn.classList.add('red'); btn.style.color=''; }
-}
+  function selectRag(groupId, color, btn) {
+    const group = document.getElementById(groupId);
+    group.querySelectorAll('.rag-btn').forEach(b => {
+      b.classList.remove('active-green','active-yellow','active-red');
+    });
+    btn.classList.add('active-' + color);
+  }
 
-function togglePF(btn, type) {
-  const row = btn.closest('.pass-fail');
-  row.querySelectorAll('.pf-btn').forEach(b => { b.classList.remove('pass','fail'); });
-  btn.classList.add(type);
-}
+  function togglePF(btn, type) {
+    const group = btn.closest('.pf-group');
+    group.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('pass','fail'));
+    btn.classList.add(type);
+  }
 
-function addTicketRow() {
-  const list = document.getElementById('ticket-list');
-  const row = document.createElement('div');
-  row.className = 'ticket-row';
-  row.innerHTML = `
-    <input type="text" placeholder="#XXXXX" style="font-size:12px;" />
-    <input type="text" placeholder="Customer name" style="font-size:12px;" />
-    <select style="font-size:12px;"><option>P1</option><option>P2</option><option>P3</option><option>P4</option></select>
-    <select style="font-size:12px;"><option>Open</option><option>Pending</option><option>Resolved</option></select>
-    <input type="text" placeholder="Next action required" style="font-size:12px;" />
-  `;
-  list.appendChild(row);
-}
+  function addTicketRow() {
+    const list = document.getElementById('ticket-list');
+    const row = document.createElement('div');
+    row.className = 'ticket-row';
+    row.innerHTML = `
+      <input type="text" placeholder="#XXXXX" />
+      <input type="text" placeholder="Customer" />
+      <select><option>P1</option><option>P2</option><option>P3</option><option>P4</option></select>
+      <select><option>Open</option><option>Pending</option><option>Resolved</option></select>
+      <input type="text" placeholder="Next action required" />
+      <button type="button" class="btn-remove" onclick="removeRow(this)" title="Remove">×</button>
+    `;
+    list.appendChild(row);
+    row.querySelector('input').focus();
+  }
 
-function submitForm() {
-  alert('In production, this button submits the form to the Feishu workflow and posts a summary to the designated Feishu/Lark shift channel.');
-}
+  function removeRow(btn) {
+    const rows = document.querySelectorAll('#ticket-list .ticket-row');
+    if (rows.length > 1) btn.closest('.ticket-row').remove();
+  }
+
+  function updateOpen() {
+    const handled = parseInt(document.getElementById('total-handled').value) || 0;
+    const resolved = parseInt(document.getElementById('total-resolved').value) || 0;
+    document.getElementById('total-open').value = Math.max(0, handled - resolved);
+  }
+
+  function submitForm(e) {
+    e.preventDefault();
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  // Set today's date by default
+  const dateInput = document.querySelector('input[type="date"]');
+  if (dateInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dateInput.value = today;
+  }
 </script>
+</body>
+</html>
